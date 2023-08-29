@@ -11,3 +11,6 @@ composer install
 PHP-CS-Fixer
 ./vendor/bin/php-cs-fixer fix --dry-run --diff
 ./vendor/bin/php-cs-fixer fix
+
+PHPUnit
+php bin/phpunit
