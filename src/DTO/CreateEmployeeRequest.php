@@ -27,9 +27,11 @@ class CreateEmployeeRequest
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): void
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+
+        return $this;
     }
 
     public function getLastName(): string
@@ -37,9 +39,11 @@ class CreateEmployeeRequest
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): void
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -47,9 +51,11 @@ class CreateEmployeeRequest
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getFirstDay(): int
@@ -57,9 +63,11 @@ class CreateEmployeeRequest
         return $this->firstDay;
     }
 
-    public function setFirstDay(int $firstDay): void
+    public function setFirstDay(int $firstDay): self
     {
         $this->firstDay = $firstDay;
+
+        return $this;
     }
 
     public function getSalary(): float
@@ -67,8 +75,10 @@ class CreateEmployeeRequest
         return $this->salary;
     }
 
-    public function setSalary(float $salary): void
+    public function setSalary(float $salary): self
     {
         $this->salary = $salary;
+
+        return $this;
     }
 }
