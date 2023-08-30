@@ -23,8 +23,8 @@ class User
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $email;
 
-    #[ORM\Column(type: 'integer')]
-    private ?int $firstDay;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeImmutable $firstDay;
 
     #[ORM\Column(type: 'float')]
     private ?float $salary;
@@ -45,7 +45,7 @@ class User
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -57,7 +57,7 @@ class User
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): static
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -69,19 +69,19 @@ class User
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getFirstDay(): ?int
+    public function getFirstDay(): ?\DateTimeImmutable
     {
         return $this->firstDay;
     }
 
-    public function setFirstDay(int $firstDay): static
+    public function setFirstDay(?\DateTimeImmutable $firstDay): self
     {
         $this->firstDay = $firstDay;
 
@@ -93,7 +93,7 @@ class User
         return $this->salary;
     }
 
-    public function setSalary(float $salary): static
+    public function setSalary(float $salary): self
     {
         $this->salary = $salary;
 
@@ -105,7 +105,7 @@ class User
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -123,7 +123,7 @@ class User
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
