@@ -7,10 +7,11 @@ use App\DTO\IdResponse;
 use App\Entity\User;
 use App\Exception\EmployeeDuplicateException;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
-class EmployeeService
+class EmployeeService implements EmployeeServiceInterface
 {
-    public function __construct(private readonly UserRepository $userRepository)
+    public function __construct(private readonly UserRepository $userRepository, private readonly EntityManagerInterface $em)
     {
     }
 
@@ -24,10 +25,11 @@ class EmployeeService
             ->setFirstName($createEmployeeRequest->getFirstName())
             ->setLastName($createEmployeeRequest->getLastName())
             ->setEmail($createEmployeeRequest->getEmail())
-            ->setFirstDay($createEmployeeRequest->getFirstDay())
+            ->setFirstDay($createEmployeeRequest->getFirstDay()->getTimestamp())
             ->setSalary($createEmployeeRequest->getSalary());
 
-        $this->userRepository->saveAndCommit($user);
+        $this->em->persist($user);
+        $this->em->flush();
 
         return new IdResponse($user->getId());
     }
