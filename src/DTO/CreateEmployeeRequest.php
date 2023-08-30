@@ -19,7 +19,7 @@ class CreateEmployeeRequest
     private int $firstDay;
 
     #[NotBlank]
-    #[Assert\GreaterThan(100)]
+    #[Assert\GreaterThanOrEqual(100)]
     private float $salary;
 
     public function getFirstName(): string
