@@ -3,7 +3,7 @@ CRUD API for the user entity
 
 git clone https://github.com/BlackSou/user-crud-symfony.git
 docker-compose build
-docker-compose up
+docker-compose up -d
 
 docker exec -ti php-fpm sh
 composer install
