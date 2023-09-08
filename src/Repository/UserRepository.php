@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Exception\EmployeeNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,5 +27,15 @@ class UserRepository extends ServiceEntityRepository
         $result = $this->findOneBy(['email' => $email]);
 
         return null !== $result;
+    }
+
+    public function getUserById(int $id): User
+    {
+        $user = $this->find($id);
+        if (null === $user) {
+            throw new EmployeeNotFoundException();
+        }
+
+        return $user;
     }
 }
