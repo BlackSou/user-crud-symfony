@@ -6,6 +6,6 @@ class EmployeeDuplicateException extends \RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('employee duplicate');
+        parent::__construct('Employee duplicate');
     }
 }
