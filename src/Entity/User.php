@@ -12,35 +12,35 @@ class User
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private ?int $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $firstName;
+    private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private ?string $lastName;
+    private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    private ?string $email;
+    private string $email;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private ?\DateTimeImmutable $firstDay;
+    private \DateTimeInterface $firstDay;
 
-    #[ORM\Column(type: 'float')]
-    private ?float $salary;
-
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: 'integer')]
+    private int $salary;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private ?\DateTimeInterface $createdAt;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeInterface $updatedAt;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -52,7 +52,7 @@ class User
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -64,7 +64,7 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -76,63 +76,51 @@ class User
         return $this;
     }
 
-    public function getFirstDay(): ?\DateTimeImmutable
+    public function getFirstDay(): \DateTimeInterface
     {
         return $this->firstDay;
     }
 
-    public function setFirstDay(?\DateTimeImmutable $firstDay): self
+    public function setFirstDay(\DateTimeInterface $firstDay): self
     {
         $this->firstDay = $firstDay;
 
         return $this;
     }
 
-    public function getSalary(): ?float
+    public function getSalary(): int
     {
         return $this->salary;
     }
 
-    public function setSalary(float $salary): self
+    public function setSalary(int $salary): self
     {
         $this->salary = $salary;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTimeImmutable();
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
-    }
-
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new \DateTimeImmutable();
     }
 }
