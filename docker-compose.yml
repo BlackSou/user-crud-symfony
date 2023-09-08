@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  php-fpm:
+    container_name: php-fpm
+    build:
+      dockerfile: ./docker/php-fpm/Dockerfile
+    volumes:
+      - .:/var/www/
+    restart: always
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./docker/nginx
+    volumes:
+      - .:/var/www:rw
+    depends_on:
+      - php-fpm
+    ports:
+      - "88:80"
+    restart: always
+
+  postgres:
+    container_name: postgres
+    build:
+      context: ./docker/postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: symfony
+      POSTGRES_USER: symfony
+      POSTGRES_PASSWORD: symfony
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - db_data:/var/lib/postgresql/data:rw
+
+volumes:
+  db_data:
