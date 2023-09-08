@@ -54,4 +54,15 @@ class EmployeeController extends AbstractController
     {
         return $this->json($this->employeeService->updateEmployee($id, $updateEmployeeRequest));
     }
+
+    #[Route('/api/v1/employee/{id}', name: 'delete employee', methods: ['DELETE'])]
+    #[OA\Tag(name: 'Employee API')]
+    #[OA\Response(response: 200, description: 'Delete employee', content: new Model(type: EmployeeListResponse::class))]
+    #[OA\Response(response: 404, description: 'Employee not found', content: new Model(type: ApiErrorResponse::class))]
+    public function deleteEmployee(int $id): Response
+    {
+        $this->employeeService->deleteEmployee($id);
+
+        return $this->json('User deleted');
+    }
 }

@@ -15,4 +15,5 @@ interface EmployeeServiceInterface
 
     public function updateEmployee(int $id, UpdateEmployeeRequest $updateEmployeeRequest): IdResponse;
 
+    public function deleteEmployee(int $id): void;
 }

@@ -61,6 +61,14 @@ class EmployeeService implements EmployeeServiceInterface
         return new IdResponse($employee->getId());
     }
 
+    public function deleteEmployee(int $id): void
+    {
+        $employee = $this->userRepository->getUserById($id);
+
+        $this->em->remove($employee);
+        $this->em->flush();
+    }
+
     private function map(User $user): EmployeeListItem
     {
         return (new EmployeeListItem())
