@@ -67,28 +67,28 @@ Create the CRUD API for the employee entity.
 ```
 
 ## The Fast Track
-Copy and run in the terminal
+1 Copy and run in the terminal
 ```
-git clone https://github.com/BlackSou/user-crud-symfony.git
+git clone https://github.com/BlackSou/user-crud-symfony.git app
 ```
+2 Run Docker containers(wait few minutes)
 ```
 docker-compose build
 ```
 ```
 docker-compose up -d
 ```
-
-Open the Docker PHP container
+3 Open the Docker PHP container
 ```
 docker exec -ti php-fpm sh
 ```
-Install dependencies
+4 Install Composer dependencies
 ```
 composer install
 ```
-Run migration and apply changes for DB
+5 Run migrations
 ```
-php bin/console make:migration; php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate
 ```
 
 ## API Endpoints
