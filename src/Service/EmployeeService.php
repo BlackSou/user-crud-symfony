@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\CreateEmployeeRequest;
+use App\DTO\Employee\CreateEmployeeRequest;
 use App\DTO\IdResponse;
 use App\Entity\User;
 use App\Exception\EmployeeDuplicateException;
@@ -25,7 +25,7 @@ class EmployeeService implements EmployeeServiceInterface
             ->setFirstName($createEmployeeRequest->getFirstName())
             ->setLastName($createEmployeeRequest->getLastName())
             ->setEmail($createEmployeeRequest->getEmail())
-            ->setFirstDay($createEmployeeRequest->getFirstDay()->getTimestamp())
+            ->setFirstDay($createEmployeeRequest->getFirstDay())
             ->setSalary($createEmployeeRequest->getSalary());
 
         $this->em->persist($user);

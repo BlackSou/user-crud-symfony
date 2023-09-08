@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\CreateEmployeeRequest;
+use App\DTO\Employee\CreateEmployeeRequest;
 use App\DTO\IdResponse;
 
 interface EmployeeServiceInterface

@@ -1,26 +1,31 @@
 <?php
 
-namespace App\DTO;
+namespace App\DTO\Employee;
+
+use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateEmployeeRequest
 {
-    #[NotBlank]
+    #[Assert\NotBlank]
     private string $firstName;
 
-    #[NotBlank]
+    #[Assert\NotBlank]
     private string $lastName;
 
-    #[Email]
-    #[NotBlank]
+    #[Assert\NotBlank]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     private string $email;
 
-    #[NotBlank]
-    #[Assert\GreaterThan('today')]
-    private int $firstDay;
+    #[Assert\NotBlank]
+    #[Assert\GreaterThanOrEqual('today')]
+    private \DateTimeInterface $firstDay;
 
-    #[NotBlank]
+    #[Assert\NotBlank]
     #[Assert\GreaterThanOrEqual(100)]
-    private float $salary;
+    #[Assert\Type('numeric')]
+    private int $salary;
 
     public function getFirstName(): string
     {
@@ -58,24 +63,24 @@ class CreateEmployeeRequest
         return $this;
     }
 
-    public function getFirstDay(): int
+    public function getFirstDay(): \DateTimeInterface
     {
         return $this->firstDay;
     }
 
-    public function setFirstDay(int $firstDay): self
+    public function setFirstDay(\DateTimeInterface $firstDay): self
     {
         $this->firstDay = $firstDay;
 
         return $this;
     }
 
-    public function getSalary(): float
+    public function getSalary(): int
     {
         return $this->salary;
     }
 
-    public function setSalary(float $salary): self
+    public function setSalary(int $salary): self
     {
         $this->salary = $salary;
 
