@@ -6,6 +6,7 @@ use App\Attribute\RequestBody;
 use App\DTO\ApiErrorResponse;
 use App\DTO\Employee\CreateEmployeeRequest;
 use App\DTO\Employee\EmployeeListResponse;
+use App\DTO\Employee\UpdateEmployeeRequest;
 use App\DTO\IdResponse;
 use App\Service\EmployeeServiceInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -42,5 +43,15 @@ class EmployeeController extends AbstractController
     public function createEmployee(#[RequestBody] CreateEmployeeRequest $createEmployeeRequest): Response
     {
         return $this->json($this->employeeService->createEmployee($createEmployeeRequest));
+    }
+
+    #[Route('/api/v1/employee/{id}', name: 'update employee', methods: ['PUT'])]
+    #[OA\Tag(name: 'Employee API')]
+    #[OA\Response(response: 200, description: 'Update employee', content: new Model(type: IdResponse::class))]
+    #[OA\Response(response: 400, description: 'Validation failed', content: new Model(type: ApiErrorResponse::class))]
+    #[OA\RequestBody(content: new Model(type: UpdateEmployeeRequest::class))]
+    public function updateEmployee(int $id, #[RequestBody] UpdateEmployeeRequest $updateEmployeeRequest): Response
+    {
+        return $this->json($this->employeeService->updateEmployee($id, $updateEmployeeRequest));
     }
 }

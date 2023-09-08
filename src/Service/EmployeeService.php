@@ -5,6 +5,7 @@ namespace App\Service;
 use App\DTO\Employee\EmployeeListItem;
 use App\DTO\Employee\EmployeeListResponse;
 use App\DTO\Employee\CreateEmployeeRequest;
+use App\DTO\Employee\UpdateEmployeeRequest;
 use App\DTO\IdResponse;
 use App\Entity\User;
 use App\Exception\EmployeeDuplicateException;
@@ -44,6 +45,20 @@ class EmployeeService implements EmployeeServiceInterface
         $this->em->flush();
 
         return new IdResponse($user->getId());
+    }
+
+    public function updateEmployee(int $id, UpdateEmployeeRequest $updateEmployeeRequest): IdResponse
+    {
+        $employee = $this->userRepository->getUserById($id);
+
+        $employee
+            ->setFirstName($updateEmployeeRequest->getFirstName())
+            ->setLastName($updateEmployeeRequest->getLastName())
+            ->setSalary($updateEmployeeRequest->getSalary());
+
+        $this->em->flush();
+
+        return new IdResponse($employee->getId());
     }
 
     private function map(User $user): EmployeeListItem
