@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Attribute\RequestBody;
 use App\DTO\ApiErrorResponse;
 use App\DTO\Employee\CreateEmployeeRequest;
+use App\DTO\Employee\EmployeeListResponse;
 use App\DTO\IdResponse;
 use App\Service\EmployeeServiceInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -18,6 +19,20 @@ class EmployeeController extends AbstractController
     public function __construct(private readonly EmployeeServiceInterface $employeeService)
     {
     }
+
+    #[Route('/api/v1/employees', name: 'get employees', methods: ['GET'])]
+    #[OA\Tag(name: 'Employee API')]
+    #[OA\Response(response: 200, description: 'Get employees', content: new Model(type: EmployeeListResponse::class))]
+    public function employees(): Response
+    {
+        return $this->json($this->employeeService->getEmployees());
+    }
+
+    /*#[Route('/api/v1/employee/{id}', name: 'employee', methods: ['GET'])]
+    public function employee(int $id): Response
+    {
+        return $this->json(null);
+    }*/
 
     #[Route('/api/v1/employee', name: 'create employee', methods: ['POST'])]
     #[OA\Tag(name: 'Employee API')]
