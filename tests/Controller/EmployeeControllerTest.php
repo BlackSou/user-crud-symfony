@@ -4,14 +4,17 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Helmich\JsonAssert\JsonAssertions;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class EmployeeControllerTest extends WebTestCase
 {
+    use JsonAssertions;
+
     protected KernelBrowser $client;
 
-    protected ?EntityManagerInterface $em;
+    protected EntityManagerInterface $em;
 
     protected function setUp(): void
     {
@@ -23,12 +26,15 @@ class EmployeeControllerTest extends WebTestCase
 
     public function testDeleteEmployee(): void
     {
+        $randomNumber = mt_rand();
+        $email = "test_controller_$randomNumber@delete.test";
+
         $employee = (new User())
-            ->setFirstName('A')
-            ->setLastName('B')
-            ->setEmail('a@b.test')
+            ->setFirstName('TestController')
+            ->setLastName('Delete')
+            ->setEmail($email)
             ->setFirstDay(new \DateTimeImmutable('2024-10-10'))
-            ->setSalary(100);
+            ->setSalary(101);
 
         $this->em->persist($employee);
         $this->em->flush();
@@ -40,7 +46,29 @@ class EmployeeControllerTest extends WebTestCase
 
     public function testCreateEmployee(): void
     {
+        $randomNumber = mt_rand();
+        $email = "test_controller_$randomNumber@create.test";
+        $employee = [
+            'firstName' => 'TestController',
+            'lastName' => 'Create',
+            'email' => $email,
+            'firstDay' => '2024-10-10',
+            'salary' => 101,
+        ];
 
+        $this->client->request('POST', '/api/v1/employee', [], [], [], json_encode($employee, JSON_THROW_ON_ERROR));
+
+        $this->assertResponseIsSuccessful();
+
+        $responseContent = json_decode($this->client->getResponse()->getContent(), null, 512, JSON_THROW_ON_ERROR);
+
+        $this->assertJsonDocumentMatchesSchema($responseContent, [
+            'type' => 'object',
+            'required' => ['id'],
+            'properties' => [
+                'id' => ['type' => 'integer'],
+            ],
+        ]);
     }
 
     public function testEmployees(): void
