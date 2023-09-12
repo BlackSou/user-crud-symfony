@@ -120,5 +120,36 @@ class EmployeeControllerTest extends WebTestCase
 
     public function testUpdateEmployee(): void
     {
+        $randomNumber = mt_rand();
+        $email = "test_controller_$randomNumber@delete.test";
+
+        $employee = (new User())
+            ->setFirstName('TestController')
+            ->setLastName('Delete')
+            ->setEmail($email)
+            ->setFirstDay(new \DateTimeImmutable('2024-10-10'))
+            ->setSalary(101);
+
+        $this->em->persist($employee);
+        $this->em->flush();
+
+        $this->client->request('PUT', '/api/v1/employee/'.$employee->getId(), [], [], [], json_encode([
+            'firstName' => 'Get Book',
+            'lastName' => 'Test Controller',
+            'salary' => $randomNumber,
+        ], JSON_THROW_ON_ERROR));
+
+        $this->assertResponseIsSuccessful();
+        $responseContent = json_decode($this->client->getResponse()->getContent(), null, 512, JSON_THROW_ON_ERROR);
+
+        $schema = [
+            'type' => 'object',
+            'required' => ['id'],
+            'properties' => [
+                'id' => ['type' => 'integer'],
+            ],
+        ];
+
+        $this->assertJsonDocumentMatchesSchema($responseContent, $schema);
     }
 }
