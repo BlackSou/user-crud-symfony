@@ -121,11 +121,11 @@ class EmployeeControllerTest extends WebTestCase
     public function testUpdateEmployee(): void
     {
         $randomNumber = mt_rand();
-        $email = "test_controller_$randomNumber@delete.test";
+        $email = "test_controller_$randomNumber@update.test";
 
         $employee = (new User())
             ->setFirstName('TestController')
-            ->setLastName('Delete')
+            ->setLastName('Update')
             ->setEmail($email)
             ->setFirstDay(new \DateTimeImmutable('2024-10-10'))
             ->setSalary(101);
@@ -134,7 +134,7 @@ class EmployeeControllerTest extends WebTestCase
         $this->em->flush();
 
         $this->client->request('PUT', '/api/v1/employee/'.$employee->getId(), [], [], [], json_encode([
-            'firstName' => 'Get Book',
+            'firstName' => 'Update',
             'lastName' => 'Test Controller',
             'salary' => $randomNumber,
         ], JSON_THROW_ON_ERROR));
